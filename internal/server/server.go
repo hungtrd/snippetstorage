@@ -9,7 +9,7 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
-	"snippetstorage/internal/database"
+	"github.com/hungtrd/snippetstorage/internal/database"
 )
 
 type Server struct {

@@ -1,0 +1,20 @@
+package web
+
+templ NewSnippet() {
+	@Base() {
+		<form hx-post="/snippets" method="POST" hx-target="#hello-container">
+			<label for="snippet">New Snippets:</label>
+			<br/>
+			<textarea id="snippet" name="snippet" rows="30" cols="200" placeholder="write your snippet"></textarea>
+			<br/>
+			<button type="submit">Submit</button>
+		</form>
+		<div id="hello-container"></div>
+	}
+}
+
+templ ListSnippet(name string) {
+	@Base() {
+		<div>Hello, { name }</div>
+	}
+}

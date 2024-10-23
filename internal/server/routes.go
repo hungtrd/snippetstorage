@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	"github.com/a-h/templ"
+	"github.com/hungtrd/snippetstorage/cmd/web"
+	"github.com/hungtrd/snippetstorage/internal/handler"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"snippetstorage/cmd/web"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
@@ -16,10 +17,18 @@ func (s *Server) RegisterRoutes() http.Handler {
 	fileServer := http.FileServer(http.FS(web.Files))
 	e.GET("/assets/*", echo.WrapHandler(fileServer))
 
+	// Web UI
 	e.GET("/web", echo.WrapHandler(templ.Handler(web.HelloForm())))
 	e.POST("/hello", echo.WrapHandler(http.HandlerFunc(web.HelloWebHandler)))
 
+	e.GET("/snippets/new", echo.WrapHandler(templ.Handler(web.NewSnippet())))
+
+	// RestAPI
 	e.GET("/", s.HelloWorldHandler)
+
+	e.POST("/snippets", echo.WrapHandler(http.HandlerFunc(handler.CreateSnippetHandler)))
+	e.GET("/snippets", echo.WrapHandler(http.HandlerFunc(handler.GetSnippetsHandler)))
+	e.GET("/snippet/:id", echo.WrapHandler(http.HandlerFunc(handler.GetDetailSnippetHandler)))
 
 	e.GET("/health", s.healthHandler)
 
