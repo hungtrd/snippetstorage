@@ -10,6 +10,16 @@ services:
       - "${DB_PORT}:27017"
     volumes:
       - mongo_volume:/data/db
-
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev  # Để chuyển sang production, thay đổi thành 'prod'
+    volumes:
+      - .:/app  # Mount code vào container để live reload
+    ports:
+      - "8080:8080"
+    environment:
+      - GO_ENV=development
 volumes:
   mongo_volume:
