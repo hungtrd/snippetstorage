@@ -14,6 +14,7 @@ import (
 
 type Service interface {
 	Health() map[string]string
+	Client() *mongo.Client
 }
 
 type service struct {
@@ -28,10 +29,8 @@ var (
 
 func New() Service {
 	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s", host, port)))
-
 	if err != nil {
 		log.Fatal(err)
-
 	}
 	return &service{
 		db: client,
@@ -50,4 +49,8 @@ func (s *service) Health() map[string]string {
 	return map[string]string{
 		"message": "It's healthy",
 	}
+}
+
+func (s *service) Client() *mongo.Client {
+	return s.db
 }

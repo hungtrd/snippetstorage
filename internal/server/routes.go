@@ -26,9 +26,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	// RestAPI
 	e.GET("/", s.HelloWorldHandler)
 
-	e.POST("/snippets", echo.WrapHandler(http.HandlerFunc(handler.CreateSnippetHandler)))
-	e.GET("/snippets", echo.WrapHandler(http.HandlerFunc(handler.GetSnippetsHandler)))
-	e.GET("/snippet/:id", echo.WrapHandler(http.HandlerFunc(handler.GetDetailSnippetHandler)))
+	handler.NewSnippetHandler(e, s.db)
 
 	e.GET("/health", s.healthHandler)
 
