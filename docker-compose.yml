@@ -17,6 +17,8 @@ services:
       target: dev  # Để chuyển sang production, thay đổi thành 'prod'
     volumes:
       - .:/app  # Mount code vào container để live reload
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     environment:

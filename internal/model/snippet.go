@@ -17,5 +17,5 @@ type Snippet struct {
 	IsPublic  bool               `bson:"isPublic,omitempty" json:"is_public"`
 	CreatedAt time.Time          `bson:"createdAt,omitempty" json:"created_at"`
 	UpdatedAt time.Time          `bson:"updatedAt,omitempty" json:"updated_at"`
-	DeletedAt time.Time          `bson:"deletedAt,omitempty" json:"deleted_at"`
+	DeletedAt *time.Time         `bson:"deletedAt,omitempty" json:"deleted_at"`
 }

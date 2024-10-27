@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/hungtrd/snippetstorage/internal/database"
 	"github.com/hungtrd/snippetstorage/internal/model"
@@ -18,15 +19,29 @@ func NewSnippetHandler(e *echo.Echo, db database.Service) {
 		db: db,
 	}
 
-	e.POST("/snippets", handler.CreateSnippetHandler)
-	e.GET("/snippets", echo.WrapHandler(http.HandlerFunc(handler.GetSnippetsHandler)))
-	e.GET("/snippet/:id", echo.WrapHandler(http.HandlerFunc(handler.GetDetailSnippetHandler)))
+	e.POST("/snippets", handler.CreateSnippet)
+	e.GET("/snippets", echo.WrapHandler(http.HandlerFunc(handler.GetSnippets)))
+	e.GET("/snippet/:id", echo.WrapHandler(http.HandlerFunc(handler.GetDetailSnippet)))
 }
 
-func (h *SnippetHandler) CreateSnippetHandler(c echo.Context) error {
-	ctx := c.Request().Context()
+type CreateSnippetRequest struct {
+	Title   string `form:"title" validate:"required"`
+	Content string `form:"content" validate:"required"`
+}
 
-	snippet := model.Snippet{}
+func (h *SnippetHandler) CreateSnippet(c echo.Context) error {
+	ctx := c.Request().Context()
+	req := new(CreateSnippetRequest)
+	err := c.Bind(req)
+	if err != nil {
+		return err
+	}
+
+	snippet := model.Snippet{
+		Content:   req.Content,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
 
 	collection := h.db.Client().Database("snippetstorage").Collection(model.SnippetCollection)
 
@@ -40,8 +55,8 @@ func (h *SnippetHandler) CreateSnippetHandler(c echo.Context) error {
 	return c.JSON(200, snippet)
 }
 
-func (h *SnippetHandler) GetDetailSnippetHandler(w http.ResponseWriter, r *http.Request) {
+func (h *SnippetHandler) GetDetailSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
-func (h *SnippetHandler) GetSnippetsHandler(w http.ResponseWriter, r *http.Request) {
+func (h *SnippetHandler) GetSnippets(w http.ResponseWriter, r *http.Request) {
 }
