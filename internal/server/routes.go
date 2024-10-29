@@ -24,8 +24,6 @@ func (s *Server) RegisterRoutes() http.Handler {
 	e.GET("/web", echo.WrapHandler(templ.Handler(web.HelloForm())))
 	e.POST("/hello", echo.WrapHandler(http.HandlerFunc(web.HelloWebHandler)))
 
-	e.GET("/snippets/new", echo.WrapHandler(templ.Handler(web.NewSnippet())))
-
 	// RestAPI
 	e.GET("/", s.HelloWorldHandler)
 

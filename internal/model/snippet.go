@@ -9,7 +9,7 @@ import (
 const SnippetCollection = "snippets"
 
 type Snippet struct {
-	ID        primitive.ObjectID `bson:"_id" json:"id"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Content   string             `bson:"content,omitempty" json:"content"`
 	Title     string             `bson:"title,omitempty" json:"title"`
 	Author    string             `bson:"author,omitempty" json:"author"`

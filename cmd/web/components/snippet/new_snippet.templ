@@ -1,0 +1,30 @@
+package snippet
+
+import "github.com/hungtrd/snippetstorage/cmd/web/layout"
+
+templ NewSnippet() {
+	@layout.Base() {
+		<div class="container mx-auto">
+			<div class="flex">
+				<div class="bg-white p-8 rounded shadow-lg">
+					<form hx-post="/snippets" method="POST" hx-target="#hello-container">
+						<label for="snippet">New Snippets:</label>
+						<br/>
+						<textarea id="snippet" name="content" rows="30" cols="200" placeholder="write your snippet"></textarea>
+						<br/>
+						<button type="submit">Submit</button>
+					</form>
+					<div id="hello-container"></div>
+				</div>
+			</div>
+		</div>
+		<!-- <form hx-post="/snippets" method="POST" hx-target="#hello-container"> -->
+		<!-- 	<label for="snippet">New Snippets:</label> -->
+		<!-- 	<br/> -->
+		<!-- 	<textarea id="snippet" name="snippet" rows="30" cols="200" placeholder="write your snippet"></textarea> -->
+		<!-- 	<br/> -->
+		<!-- 	<button type="submit">Submit</button> -->
+		<!-- </form> -->
+		<!-- <div id="hello-container"></div> -->
+	}
+}

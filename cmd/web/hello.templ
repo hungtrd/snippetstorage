@@ -1,7 +1,9 @@
 package web
 
+import "github.com/hungtrd/snippetstorage/cmd/web/layout"
+
 templ HelloForm() {
-	@Base() {
+	@layout.Base() {
 		<form hx-post="/hello" method="POST" hx-target="#hello-container">
 			<input id="name" name="name" type="text"/>
 			<button type="submit">Submit</button>
